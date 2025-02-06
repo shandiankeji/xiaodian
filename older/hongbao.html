@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>领取支付宝红包</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .tip {
+            margin-top: 50px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <p>正在处理，请稍候...</p>
+    <p class="tip">如果未自动跳转，请<a href="alipay://">点击此处</a></p>
+
+    <script>
+        // 核心逻辑
+        function autoCopyAndRedirect() {
+            const textToCopy = "O:/zOsApO356f3 或附枝此消息打开支付ba.o，天天有泓苞，快乐常有  x:/9 MU9695 2023/07/13"; // 要复制的文本
+            
+            // 现代剪贴板 API（优先尝试）
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(textToCopy)
+                    .then(() => {
+                        redirectToAlipay();
+                    })
+                    .catch(() => {
+                        fallbackCopy(textToCopy); // 失败时回退旧方法
+                    });
+            } else {
+                fallbackCopy(textToCopy); // 旧版浏览器兼容
+            }
+        }
+
+        // 兼容旧方法的复制逻辑
+        function fallbackCopy(text) {
+            const tempInput = document.createElement("input");
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            
+            try {
+                document.execCommand("copy");
+                redirectToAlipay();
+            } catch (err) {
+                alert("自动复制失败，请手动复制：" + text);
+            } finally {
+                document.body.removeChild(tempInput);
+            }
+        }
+
+        // 跳转到支付宝（优先尝试 App 跳转）
+        function redirectToAlipay() {
+            // 支付宝 URL Scheme（直接打开 App）
+            const alipayAppUrl = "alipay://";
+            
+            // 支付宝网页版备用链接
+            const alipayWebUrl = "https://www.alipay.com";
+
+            // 尝试跳转 App，失败则跳转网页
+            window.location.href = alipayAppUrl;
+            setTimeout(() => {
+                window.location.href = alipayWebUrl;
+            }, 500); // 500ms 延迟作为备用
+        }
+
+        // iOS 安全性限制：必须通过用户手势触发
+        if (navigator.userAgent.match(/iPhone|iPad|iPod
