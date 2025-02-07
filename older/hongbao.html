@@ -9,16 +9,38 @@
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .message {
+            font-size: 18px;
+            color: #333;
         }
         .tip {
             margin-top: 50px;
             color: #666;
         }
+        .tip a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .tip a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-    <p>正在处理，请稍候...</p>
-    <p class="tip">如果未自动跳转，请<a href="alipay://">点击此处</a></p>
+    <div class="container">
+        <p class="message">正在处理，请稍候...</p>
+        <p class="tip">如果未自动跳转，请<a href="alipay://">点击此处</a></p>
+    </div>
 
     <script>
         // 核心逻辑
@@ -72,4 +94,11 @@
         }
 
         // iOS 安全性限制：必须通过用户手势触发
-        if (navigator.userAgent.match(/iPhone|iPad|iPod
+        if (navigator.userAgent.match(/iPhone|iPad|iPod/)) {
+            document.querySelector('.tip a').addEventListener('click', autoCopyAndRedirect);
+        } else {
+            autoCopyAndRedirect();
+        }
+    </script>
+</body>
+</html>
